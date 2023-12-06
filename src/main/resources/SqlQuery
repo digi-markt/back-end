@@ -23,7 +23,6 @@ FOREIGN KEY (RoleID) REFERENCES Roles(ID)
 
 
 3.	Category (Static Table)
-
 CREATE TABLE Category (
 ID INT PRIMARY KEY,
 Name VARCHAR(255)
