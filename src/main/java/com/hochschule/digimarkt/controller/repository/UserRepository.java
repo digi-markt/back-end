@@ -1,5 +1,6 @@
-package com.hochschule.digimarkt.controller.entity;
+package com.hochschule.digimarkt.controller.repository;
 
+import com.hochschule.digimarkt.controller.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

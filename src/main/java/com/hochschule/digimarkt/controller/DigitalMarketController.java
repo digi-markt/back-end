@@ -3,7 +3,7 @@
  */
 package com.hochschule.digimarkt.controller;
 
-import com.hochschule.digimarkt.controller.entity.UserRepository;
+import com.hochschule.digimarkt.controller.repository.UserRepository;
 import com.hochschule.digimarkt.controller.entity.Users;
 import com.hochschule.digimarkt.controller.model.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 /**

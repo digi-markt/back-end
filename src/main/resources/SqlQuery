@@ -1,0 +1,96 @@
+//Table
+1.	Roles Table (Static Table)
+
+CREATE TABLE Roles (
+	ID INT PRIMARY KEY,
+RoleName VARCHAR(255) UNIQUE
+);
+
+2.	Users
+
+1CREATE TABLE Users (
+UserID INT AUTO_INCREMENT,
+Username VARCHAR(255),
+	Password VARCHAR(255),
+Email VARCHAR(255),
+RoleID INT,
+Permission VARCHAR(255),
+Rating INT,
+Create_at TIMESTAMP,
+Modified_at TIMESTAMP,
+PRIMARY KEY (UserID, RoleID),
+FOREIGN KEY (RoleID) REFERENCES Roles(ID)
+);
+
+
+3.	Category (Static Table)
+
+CREATE TABLE Category (
+ID INT PRIMARY KEY,
+Name VARCHAR(255)
+);
+
+4.	Status Table (Static Table)
+
+CREATE TABLE Status (
+ID INT PRIMARY KEY,
+Status VARCHAR(255)
+);
+
+5.	Media Entity
+
+CREATE TABLE Media (
+MediaID INT AUTO_INCREMENT,
+Name VARCHAR(255),
+Description TEXT,
+Price DECIMAL(10, 2),
+Image BLOB,
+SellerID INT,
+ApprovalAdminID INT,
+ApprovalAdminName VARCHAR(255),
+MediaCategoryID INT,
+Created_on TIMESTAMP,
+Modified_on TIMESTAMP,
+StatusID INT,
+PRIMARY KEY (MediaID),
+FOREIGN KEY (SellerID) REFERENCES Users(UserID),
+FOREIGN KEY (ApprovalAdminID) REFERENCES Users(UserID),
+FOREIGN KEY (MediaCategoryID) REFERENCES Category(ID),
+FOREIGN KEY (StatusID) REFERENCES Status(ID)
+);
+
+6.	Chat Entity
+CREATE TABLE Chat (
+ChatID INT AUTO_INCREMENT,
+BuyerID INT,
+SellerID INT,
+Messages TEXT,
+StatusID INT,
+PRIMARY KEY (ChatID),
+FOREIGN KEY (BuyerID) REFERENCES Users(UserID),
+FOREIGN KEY (SellerID) REFERENCES Users(UserID),
+FOREIGN KEY (StatusID) REFERENCES Status(ID)
+);
+
+7.	Download Entity
+CREATE TABLE Download (
+DownloadID INT AUTO_INCREMENT,
+BuyerID INT,
+MediaID INT,
+DownloadDate TIMESTAMP,
+PRIMARY KEY (DownloadID),
+FOREIGN KEY (BuyerID) REFERENCES Users(UserID),
+FOREIGN KEY (MediaID) REFERENCES Media(MediaID)
+);
+
+8.	Seller Review Entity
+CREATE TABLE SellerReview (
+ReviewID INT AUTO_INCREMENT,
+BuyerID INT,
+SellerID INT,
+Rating INT,
+Comment TEXT,
+PRIMARY KEY (ReviewID),
+FOREIGN KEY (BuyerID) REFERENCES Users(UserID),
+FOREIGN KEY (SellerID) REFERENCES Users(UserID)
+);
