@@ -1,4 +1,4 @@
-//Table
+//Database scripts
 1.	Roles Table (Static Table)
 
 CREATE TABLE Roles (
