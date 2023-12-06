@@ -36,7 +36,7 @@ ID INT PRIMARY KEY,
 Status VARCHAR(255)
 );
 
-5.	Media Entity
+5.Media Entity
 CREATE TABLE Media (
 MediaID INT AUTO_INCREMENT,
 Name VARCHAR(255),
