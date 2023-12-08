@@ -32,7 +32,7 @@ public class DigitalMarketController {
 	}
 
 
-	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52"})
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PostMapping("/api/login")
 	public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
 		var name = loginRequest.getUsername();
