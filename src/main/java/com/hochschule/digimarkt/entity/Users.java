@@ -1,50 +1,46 @@
 package com.hochschule.digimarkt.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.security.Timestamp;
 
 @Entity
+@Table(name = "USERS")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Users {
-
-    String name;
-    String password;
-    String email;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "UserID")
+    private int userId;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name = "Username")
+    private String username;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Column(name = "Password")
+    private String password;
 
-    public String getPassword() {
-        return password;
-    }
+    @Column(name = "Email")
+    private String email;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @Column(name = "RoleID")
+    private int roleId;
 
-    public String getEmail() {
-        return email;
-    }
+    @Column(name = "Permission")
+    private String permission;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Column(name = "Rating")
+    private int rating;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "Create_at")
+    private Timestamp createdAt;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "Modified_at")
+    private Timestamp modifiedAt;
+
 }

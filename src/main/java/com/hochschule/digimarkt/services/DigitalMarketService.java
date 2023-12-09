@@ -1,12 +1,10 @@
 package com.hochschule.digimarkt.services;
 
 import com.hochschule.digimarkt.entity.Users;
-import com.hochschule.digimarkt.exceptions.NotAuthorizedException;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.UsersRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,7 +17,7 @@ public class DigitalMarketService {
 
     public String login(LoginRequest loginRequest) {
 
-        Optional<Users> usersOptional = usersRepository.findByName(loginRequest.getUsername());
+        Optional<Users> usersOptional = usersRepository.findByNameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
 
         if(usersOptional.isPresent()) {
             return "Login successful";
