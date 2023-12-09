@@ -1,4 +1,4 @@
-package com.hochschule.digimarkt.controller.entity;
+package com.hochschule.digimarkt.entity;
 
 
 import jakarta.persistence.*;
@@ -7,17 +7,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Category")
+@Table(name = "Roles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private int id;
 
-    @Column(name = "Name")
-    private String name;
+    @Column(name = "RoleName", unique = true)
+    private String roleName;
+
 
 }

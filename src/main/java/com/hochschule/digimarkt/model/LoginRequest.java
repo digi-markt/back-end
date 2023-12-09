@@ -1,4 +1,4 @@
-package com.hochschule.digimarkt.controller.model;
+package com.hochschule.digimarkt.model;
 
 public class LoginRequest {
     private String username;

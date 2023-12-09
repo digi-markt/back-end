@@ -1,4 +1,4 @@
-package com.hochschule.digimarkt.controller.model;
+package com.hochschule.digimarkt.model;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
