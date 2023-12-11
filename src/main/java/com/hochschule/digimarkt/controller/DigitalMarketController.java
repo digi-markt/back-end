@@ -51,7 +51,7 @@ public class DigitalMarketController {
 	@PostMapping("/api/signup")
 	public ResponseEntity<Users> signup(@RequestBody Users users) {
 
-		if (usersRepository.existsByUsername(users.getUsername())) {
+		if (usersRepository.existsByEmail(users.getEmail())) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
