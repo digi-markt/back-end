@@ -17,13 +17,21 @@ public class DigitalMarketService {
 
     public String login(LoginRequest loginRequest) {
 
-        Users users = usersRepository.findByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
+        Users users = usersRepository.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
 
         if(null != users) {
             return "Login successful";
         } else {
             throw new IllegalStateException("Incorrect login credentials");
         }
+    }
+
+    public Users signUp(Users user) {
+
+
+        user.setRoleId(1);
+        Users savedUser = usersRepository.save(user);
+        return savedUser;
     }
 
 }

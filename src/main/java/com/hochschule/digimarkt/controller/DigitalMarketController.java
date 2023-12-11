@@ -5,7 +5,9 @@ package com.hochschule.digimarkt.controller;
 
 import com.hochschule.digimarkt.entity.Users;
 import com.hochschule.digimarkt.model.LoginRequest;
+import com.hochschule.digimarkt.repository.UsersRepository;
 import com.hochschule.digimarkt.services.DigitalMarketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ import java.util.Optional;
 public class DigitalMarketController {
 
 	private final DigitalMarketService digitalMarketService;
+
+	@Autowired
+	private UsersRepository usersRepository;
 
 	public DigitalMarketController(DigitalMarketService digitalMarketService) {
 		this.digitalMarketService = digitalMarketService;
@@ -38,6 +43,20 @@ public class DigitalMarketController {
 
 		String response = digitalMarketService.login(loginRequest);
 		return ResponseEntity.ok(response);
+
+	}
+
+
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
+	@PostMapping("/api/signup")
+	public ResponseEntity<Users> signup(@RequestBody Users users) {
+
+		if (usersRepository.existsByUsername(users.getUsername())) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		Users user = digitalMarketService.signUp(users);
+		return new ResponseEntity<>(user, HttpStatus.CREATED);
 
 	}
 
