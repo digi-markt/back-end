@@ -50,8 +50,6 @@ Created_on TIMESTAMP,
 Modified_on TIMESTAMP,
 StatusID INT,
 PRIMARY KEY (MediaID),
-FOREIGN KEY (SellerID) REFERENCES Users(UserID),
-FOREIGN KEY (ApprovalAdminID) REFERENCES Users(UserID),
 FOREIGN KEY (MediaCategoryID) REFERENCES Category(ID),
 FOREIGN KEY (StatusID) REFERENCES Status(ID)
 );

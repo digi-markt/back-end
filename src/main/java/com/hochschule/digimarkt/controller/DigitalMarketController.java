@@ -3,6 +3,7 @@
  */
 package com.hochschule.digimarkt.controller;
 
+import com.hochschule.digimarkt.entity.Media;
 import com.hochschule.digimarkt.entity.Users;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.UsersRepository;
@@ -12,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * 
@@ -60,6 +61,36 @@ public class DigitalMarketController {
 
 	}
 
+	@GetMapping("/displayAllNonApprovedProducts")
+	public ResponseEntity<List<Media>> findAllNonApprovedProducts() {
+		List<Media> approvedProducts = digitalMarketService.findAllNonApprovedProducts();
+		if (approvedProducts.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(approvedProducts, HttpStatus.OK);
+		}
+	}
+
+	@GetMapping("/displayProduct/{mediaId}")
+	public ResponseEntity<List<Media>> findById(@PathVariable int mediaId) {
+		List<Media> entities = digitalMarketService.findAllByMediaId(mediaId);
+		if (entities.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(entities, HttpStatus.OK);
+		}
+	}
+
+	@PutMapping("/update-flag/{mediaId}")
+	public ResponseEntity<String> updateFlag(@PathVariable int mediaId) {
+		boolean updated = digitalMarketService.updateFlag(mediaId);
+
+		if (updated) {
+			return new ResponseEntity<>("Flag updated successfully", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Media not found or already flagged", HttpStatus.NOT_FOUND);
+		}
+	}
 
 
 }

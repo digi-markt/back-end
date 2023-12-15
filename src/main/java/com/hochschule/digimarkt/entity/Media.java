@@ -27,6 +27,9 @@ public class Media {
     @Column(name = "Price")
     private double price;
 
+    @Column(name = "Flag")
+    private Boolean flag;
+
     @Column(name = "Image")
     private byte[] image;
 
