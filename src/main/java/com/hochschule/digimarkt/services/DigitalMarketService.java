@@ -2,12 +2,15 @@ package com.hochschule.digimarkt.services;
 
 import com.hochschule.digimarkt.entity.Media;
 import com.hochschule.digimarkt.entity.Users;
+import com.hochschule.digimarkt.model.AddRequest;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.MediaRepository;
 import com.hochschule.digimarkt.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -61,4 +64,23 @@ public class DigitalMarketService {
         }
         return false;
     }
+
+    public String addPost(AddRequest addRequest){
+        Media media = new Media();
+        media.setName(addRequest.getTitle());
+        media.setDescription(addRequest.getDescription());
+        //media.setMediaCategoryId(addRequest.getCategory());
+        media.setPrice(addRequest.getPrice());
+        media.setFree(addRequest.isFree());
+        media.setImage(addRequest.getMediaURL());
+        //media.setCreatedOn(new Timestamp());
+        Media media1 = mediaRepository.save(media);
+        if (media1 != null){
+            return "Saved in the database";
+        }
+        else {
+            return "Not saved in the database";
+        }
+    }
+
 }

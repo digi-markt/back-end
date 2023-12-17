@@ -5,6 +5,7 @@ package com.hochschule.digimarkt.controller;
 
 import com.hochschule.digimarkt.entity.Media;
 import com.hochschule.digimarkt.entity.Users;
+import com.hochschule.digimarkt.model.AddRequest;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.UsersRepository;
 import com.hochschule.digimarkt.services.DigitalMarketService;
@@ -27,6 +28,7 @@ public class DigitalMarketController {
 
 	@Autowired
 	private UsersRepository usersRepository;
+
 
 	public DigitalMarketController(DigitalMarketService digitalMarketService) {
 		this.digitalMarketService = digitalMarketService;
@@ -90,6 +92,11 @@ public class DigitalMarketController {
 		} else {
 			return new ResponseEntity<>("Media not found or already flagged", HttpStatus.NOT_FOUND);
 		}
+	}
+	@PostMapping("/addpost")
+	public ResponseEntity<String> addPost(@RequestBody AddRequest addRequest){
+		String status = digitalMarketService.addPost(addRequest);
+		return new ResponseEntity<>(status, HttpStatus.OK);
 	}
 
 
