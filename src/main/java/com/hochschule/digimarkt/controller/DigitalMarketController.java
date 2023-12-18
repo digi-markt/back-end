@@ -63,6 +63,7 @@ public class DigitalMarketController {
 
 	}
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@GetMapping("/displayAllNonApprovedProducts")
 	public ResponseEntity<List<Media>> findAllNonApprovedProducts() {
 		List<Media> approvedProducts = digitalMarketService.findAllNonApprovedProducts();
@@ -73,6 +74,7 @@ public class DigitalMarketController {
 		}
 	}
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@GetMapping("/displayProduct/{mediaId}")
 	public ResponseEntity<List<Media>> findById(@PathVariable int mediaId) {
 		List<Media> entities = digitalMarketService.findAllByMediaId(mediaId);
@@ -83,6 +85,7 @@ public class DigitalMarketController {
 		}
 	}
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@GetMapping("/displayProducts")
 	public ResponseEntity<List<Media>> findAll() {
 		List<Media> entities = digitalMarketService.findAllByMediaId();
@@ -93,6 +96,7 @@ public class DigitalMarketController {
 		}
 	}
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PutMapping("/update-flag/{mediaId}")
 	public ResponseEntity<String> updateFlag(@PathVariable int mediaId) {
 		boolean updated = digitalMarketService.updateFlag(mediaId);
@@ -103,6 +107,8 @@ public class DigitalMarketController {
 			return new ResponseEntity<>("Media not found or already flagged", HttpStatus.NOT_FOUND);
 		}
 	}
+
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PostMapping("/addpost")
 	public ResponseEntity<String> addPost(@RequestBody AddRequest addRequest){
 		String status = digitalMarketService.addPost(addRequest);
