@@ -7,7 +7,7 @@ public class AddRequest {
     private double price;
 
     private boolean isFree;
-    private String mediaURL;
+    private String imageUrl;
 
     public String getTitle() {
         return title;
@@ -29,9 +29,6 @@ public class AddRequest {
         return isFree;
     }
 
-    public String getMediaURL() {
-        return mediaURL;
-    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -53,7 +50,12 @@ public class AddRequest {
         isFree = free;
     }
 
-    public void setMediaURL(String mediaURL) {
-        this.mediaURL = mediaURL;
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
+

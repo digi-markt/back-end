@@ -49,6 +49,10 @@ public class DigitalMarketService {
         return mediaRepository.findAllByMediaId(mediaId);
     }
 
+    public List<Media> findAllByMediaId() {
+        return mediaRepository.findAllByFlagTrue();
+    }
+
     public List<Media> findAllNonApprovedProducts() {
        List<Media> approvedProducts =  mediaRepository.findAllNonApprovedProducts();
        return approvedProducts;
@@ -69,10 +73,10 @@ public class DigitalMarketService {
         Media media = new Media();
         media.setName(addRequest.getTitle());
         media.setDescription(addRequest.getDescription());
-        //media.setMediaCategoryId(addRequest.getCategory());
+        media.setFlag(Boolean.FALSE);
         media.setPrice(addRequest.getPrice());
         media.setFree(addRequest.isFree());
-        media.setImage(addRequest.getMediaURL());
+        media.setImage(addRequest.getImageUrl());
         //media.setCreatedOn(new Timestamp());
         Media media1 = mediaRepository.save(media);
         if (media1 != null){

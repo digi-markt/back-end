@@ -83,6 +83,16 @@ public class DigitalMarketController {
 		}
 	}
 
+	@GetMapping("/displayProducts")
+	public ResponseEntity<List<Media>> findAll() {
+		List<Media> entities = digitalMarketService.findAllByMediaId();
+		if (entities.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(entities, HttpStatus.OK);
+		}
+	}
+
 	@PutMapping("/update-flag/{mediaId}")
 	public ResponseEntity<String> updateFlag(@PathVariable int mediaId) {
 		boolean updated = digitalMarketService.updateFlag(mediaId);

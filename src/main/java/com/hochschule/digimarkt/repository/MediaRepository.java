@@ -12,4 +12,7 @@ public interface MediaRepository extends JpaRepository<Media, Integer> {
 
     @Query("SELECT m FROM Media m WHERE m.flag = false")
     List<Media> findAllNonApprovedProducts();
+
+    @Query("Select m FROM Media m where m.flag = true")
+    List<Media> findAllByFlagTrue();
 }
