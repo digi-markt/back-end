@@ -43,9 +43,9 @@ public class DigitalMarketController {
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PostMapping("/api/login")
-	public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<Users> login(@RequestBody LoginRequest loginRequest) {
 
-		String response = digitalMarketService.login(loginRequest);
+		Users response = digitalMarketService.login(loginRequest);
 		return ResponseEntity.ok(response);
 
 	}

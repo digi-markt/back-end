@@ -23,12 +23,12 @@ public class DigitalMarketService {
     @Autowired
     private MediaRepository mediaRepository;
 
-    public String login(LoginRequest loginRequest) {
+    public Users login(LoginRequest loginRequest) {
 
         Users users = usersRepository.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
 
         if(null != users) {
-            return "Login successful";
+            return users;
         } else {
             throw new IllegalStateException("Incorrect login credentials");
         }
@@ -76,6 +76,7 @@ public class DigitalMarketService {
         media.setDescription(addRequest.getDescription());
         media.setFlag(Boolean.FALSE);
         media.setPrice(addRequest.getPrice());
+        media.setSellerId(addRequest.getUserId());
         media.setFree(addRequest.isFree());
         media.setImage(addRequest.getImageUrl());
         media.setCreatedOn(new Date());
