@@ -1,6 +1,8 @@
 package com.hochschule.digimarkt.model;
 
 public class AddRequest {
+
+    private int userID;
     private String title;
     private String description;
     private int category;
@@ -8,6 +10,14 @@ public class AddRequest {
 
     private boolean isFree;
     private String imageUrl;
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
 
     public String getTitle() {
         return title;
