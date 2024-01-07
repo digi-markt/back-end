@@ -6,6 +6,7 @@ package com.hochschule.digimarkt.controller;
 import com.hochschule.digimarkt.entity.Media;
 import com.hochschule.digimarkt.entity.Users;
 import com.hochschule.digimarkt.model.AddRequest;
+import com.hochschule.digimarkt.model.DataSet;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.UsersRepository;
 import com.hochschule.digimarkt.services.DigitalMarketService;
@@ -116,6 +117,18 @@ public class DigitalMarketController {
 	}
 
 
+	@GetMapping("/totalDataSet")
+	public ResponseEntity<DataSet> dataSet() {
+
+		DataSet dataSet = digitalMarketService.findTotalDataSet();
+
+		if(dataSet != null){
+			return new ResponseEntity<>(dataSet, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+	}
 }
 
 	

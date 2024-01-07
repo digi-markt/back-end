@@ -15,4 +15,10 @@ public interface MediaRepository extends JpaRepository<Media, Integer> {
 
     @Query("Select m FROM Media m WHERE m.flag = true")
     List<Media> findAllByFlagTrue();
+
+    @Query("Select COUNT(m) FROM Media m WHERE m.flag = false")
+    int findNumberofNotApprovedAdds();
+
+    @Query("Select COUNT(m) FROM Media m WHERE m.flag = true ")
+    int findNumberApprovedAdds();
 }

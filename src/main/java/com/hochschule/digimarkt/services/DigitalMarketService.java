@@ -3,6 +3,7 @@ package com.hochschule.digimarkt.services;
 import com.hochschule.digimarkt.entity.Media;
 import com.hochschule.digimarkt.entity.Users;
 import com.hochschule.digimarkt.model.AddRequest;
+import com.hochschule.digimarkt.model.DataSet;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.MediaRepository;
 import com.hochschule.digimarkt.repository.UsersRepository;
@@ -85,6 +86,25 @@ public class DigitalMarketService {
         else {
             return "Not saved in the database";
         }
+    }
+
+    public DataSet findTotalDataSet() {
+        DataSet dataSet = new DataSet();
+
+        int approvedAdd = 0;
+        int pendingAdd = 0;
+         approvedAdd = mediaRepository.findNumberApprovedAdds();
+         pendingAdd = mediaRepository.findNumberofNotApprovedAdds();
+        int totalUser = usersRepository.findAll().size();
+        int totalAdd = mediaRepository.findAll().size();
+
+        dataSet.setTotalUser(totalUser);
+        dataSet.setApprovedAdd(approvedAdd);
+        dataSet.setPendingAdd(pendingAdd);
+        dataSet.setTotalAdd(totalAdd);
+
+        return dataSet;
+
     }
 
 }
