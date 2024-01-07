@@ -77,7 +77,7 @@ public class DigitalMarketService {
         media.setPrice(addRequest.getPrice());
         media.setFree(addRequest.isFree());
         media.setImage(addRequest.getImageUrl());
-        //media.setCreatedOn(new Timestamp());
+        media.setCreatedOn(new Date());
         Media media1 = mediaRepository.save(media);
         if (media1 != null){
             return "Saved in the database";

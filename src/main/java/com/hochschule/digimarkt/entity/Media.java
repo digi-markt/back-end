@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "media")
@@ -43,10 +44,10 @@ public class Media {
     private int mediaCategoryId;*/
 
     @Column(name = "Created_on")
-    private Timestamp createdOn;
+    private Date createdOn;
 
     @Column(name = "Modified_on")
-    private Timestamp modifiedOn;
+    private Date modifiedOn;
 
     @Column(name = "StatusID")
     private int statusId;
@@ -134,19 +135,19 @@ public class Media {
         this.mediaCategoryId = mediaCategoryId;
     }*/
 
-    public Timestamp getCreatedOn() {
+    public Date getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
+    public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
     }
 
-    public Timestamp getModifiedOn() {
+    public Date getModifiedOn() {
         return modifiedOn;
     }
 
-    public void setModifiedOn(Timestamp modifiedOn) {
+    public void setModifiedOn(Date modifiedOn) {
         this.modifiedOn = modifiedOn;
     }
 
