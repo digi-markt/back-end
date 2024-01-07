@@ -103,7 +103,9 @@ public class DigitalMarketController {
 		boolean updated = digitalMarketService.updateFlag(mediaId);
 
 		if (updated) {
-			return new ResponseEntity<>("Flag updated successfully", HttpStatus.OK);
+			//String response = "Approved Successfully";
+			//return new ResponseEntity.ok(response);
+			return new ResponseEntity<>( HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("Media not found or already flagged", HttpStatus.NOT_FOUND);
 		}
