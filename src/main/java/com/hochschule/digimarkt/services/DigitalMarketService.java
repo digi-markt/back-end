@@ -77,6 +77,9 @@ public class DigitalMarketService {
         media.setFlag(Boolean.FALSE);
         media.setPrice(addRequest.getPrice());
         media.setSellerId(addRequest.getUserId());
+        Users user = usersRepository.findById(addRequest.getUserId());
+        media.setSeller_name(user.getUsername());
+        media.setSeller_email(user.getEmail());
         media.setFree(addRequest.isFree());
         media.setImage(addRequest.getImageUrl());
         media.setCreatedOn(new Date());
