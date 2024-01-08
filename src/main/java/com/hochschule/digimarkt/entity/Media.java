@@ -29,6 +29,13 @@ public class Media {
     @Column(name = "SellerID")
     private int sellerId;
 
+    @Column(name = "seller_name")
+    private String seller_name;
+
+    @Column(name = "seller_email")
+    private String seller_email;
+
+
     //@Column(name = "ApprovalAdminID")
     //private int approvalAdminId;
 
@@ -160,5 +167,21 @@ public class Media {
 
     public void setFree(boolean free) {
         isFree = free;
+    }
+
+    public String getSeller_name() {
+        return seller_name;
+    }
+
+    public void setSeller_name(String seller_name) {
+        this.seller_name = seller_name;
+    }
+
+    public String getSeller_email() {
+        return seller_email;
+    }
+
+    public void setSeller_email(String seller_email) {
+        this.seller_email = seller_email;
     }
 }
