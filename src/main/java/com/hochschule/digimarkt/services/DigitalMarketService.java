@@ -7,13 +7,18 @@ import com.hochschule.digimarkt.model.DataSet;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.MediaRepository;
 import com.hochschule.digimarkt.repository.UsersRepository;
+import com.hochschule.digimarkt.utility.EncryptUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static com.hochschule.digimarkt.utility.EncryptUtility.encodePassword;
 
 @Service
 public class DigitalMarketService {
@@ -23,6 +28,7 @@ public class DigitalMarketService {
 
     @Autowired
     private MediaRepository mediaRepository;
+
 
     public Users login(LoginRequest loginRequest) {
 
@@ -37,7 +43,10 @@ public class DigitalMarketService {
 
     public Users signUp(Users user) {
 
+        String originalPassword = user.getPassword();
+        String encodedPassword = encodePassword(originalPassword);
 
+        user.setPassword(encodedPassword);
         user.setRoleId(1);
         user.setUser_name(user.getUsername());
         user.setRating(0);

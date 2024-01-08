@@ -15,7 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
+
+import static com.hochschule.digimarkt.utility.EncryptUtility.encodePassword;
 
 /**
  * 
@@ -44,8 +48,12 @@ public class DigitalMarketController {
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PostMapping("/api/login")
 	public ResponseEntity<Users> login(@RequestBody LoginRequest loginRequest) {
+		String originalPassword = loginRequest.getPassword();
+		String encodedPassword = encodePassword(originalPassword);
 
+		loginRequest.setPassword(encodedPassword);
 		Users response = digitalMarketService.login(loginRequest);
+
 		return ResponseEntity.ok(response);
 
 	}
