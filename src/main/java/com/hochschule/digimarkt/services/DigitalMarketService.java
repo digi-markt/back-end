@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DigitalMarketService {
@@ -77,7 +78,7 @@ public class DigitalMarketService {
         media.setFlag(Boolean.FALSE);
         media.setPrice(addRequest.getPrice());
         media.setSellerId(addRequest.getUserId());
-        Users user = usersRepository.findById(addRequest.getUserId());
+        Users user = usersRepository.findById((long)addRequest.getUserId()).orElse(null);
         media.setSeller_name(user.getUsername());
         media.setSeller_email(user.getEmail());
         media.setFree(addRequest.isFree());
