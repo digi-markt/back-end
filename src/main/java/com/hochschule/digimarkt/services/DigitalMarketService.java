@@ -39,6 +39,8 @@ public class DigitalMarketService {
 
 
         user.setRoleId(1);
+        user.setUser_name(user.getUsername());
+        user.setRating(0);
         Users savedUser = usersRepository.save(user);
         return savedUser;
     }

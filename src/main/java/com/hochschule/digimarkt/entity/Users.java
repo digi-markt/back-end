@@ -38,6 +38,9 @@ public class Users {
     @Column(name = "Modified_at")
     private Timestamp modifiedAt;
 
+    @Column(name = "user_name")
+    private String user_name;
+
     public int getUserId() {
         return userId;
     }
@@ -108,5 +111,13 @@ public class Users {
 
     public void setModifiedAt(Timestamp modifiedAt) {
         this.modifiedAt = modifiedAt;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 }

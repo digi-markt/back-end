@@ -119,6 +119,8 @@ public class DigitalMarketController {
 	}
 
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
+
 	@GetMapping("/totalDataSet")
 	public ResponseEntity<DataSet> dataSet() {
 
@@ -132,6 +134,8 @@ public class DigitalMarketController {
 
 	}
 
+
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 
 	@GetMapping("/getmyadds/{userId}")
 	public ResponseEntity<List<Media>> getMyAdds(@PathVariable int userId) {
