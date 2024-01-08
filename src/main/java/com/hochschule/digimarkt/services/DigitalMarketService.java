@@ -126,4 +126,12 @@ public class DigitalMarketService {
 
     }
 
+    public boolean deleteMediaById(int mediaId) {
+        Optional<Media> mediaOptional = mediaRepository.findById(mediaId);
+        if (mediaOptional.isPresent()) {
+            mediaRepository.deleteById(mediaId);
+            return true;
+        }
+        return false;
+    }
 }

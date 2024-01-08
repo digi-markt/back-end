@@ -147,6 +147,20 @@ public class DigitalMarketController {
 			return new ResponseEntity<>(mediaList, HttpStatus.OK);
 		}
 	}
+
+	@DeleteMapping("/deleteMedia/{mediaId}")
+	public ResponseEntity<String> deleteMedia(@PathVariable int mediaId) {
+		try {
+			boolean deleted = digitalMarketService.deleteMediaById(mediaId);
+			if (deleted) {
+				return new ResponseEntity<>("Post Removed successfully", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>("Post not found", HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>("Error deleting media: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
 
 	
