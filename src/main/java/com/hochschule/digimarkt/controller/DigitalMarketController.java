@@ -131,6 +131,18 @@ public class DigitalMarketController {
 		}
 
 	}
+
+
+	@GetMapping("/getmyadds/{userId}")
+	public ResponseEntity<List<Media>> getMyAdds(@PathVariable int userId) {
+		List<Media> mediaList = digitalMarketService.findMyAdds(userId);
+
+		if (mediaList.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(mediaList, HttpStatus.OK);
+		}
+	}
 }
 
 	

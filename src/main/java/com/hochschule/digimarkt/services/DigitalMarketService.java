@@ -108,4 +108,16 @@ public class DigitalMarketService {
 
     }
 
+    public List<Media> findMyAdds(int userId)  {
+
+        List<Media> media = mediaRepository.findAddsBySellerId(userId);
+
+        if(media.isEmpty()) {
+
+        }
+
+        return media;
+
+    }
+
 }

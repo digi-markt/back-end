@@ -21,4 +21,7 @@ public interface MediaRepository extends JpaRepository<Media, Integer> {
 
     @Query("Select COUNT(m) FROM Media m WHERE m.flag = true ")
     int findNumberApprovedAdds();
+
+    @Query("Select m FROM Media m WHERE m.sellerId =:sellerId")
+    List<Media> findAddsBySellerId(int sellerId);
 }
