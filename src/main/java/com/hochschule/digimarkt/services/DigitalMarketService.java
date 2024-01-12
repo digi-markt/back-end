@@ -7,13 +7,8 @@ import com.hochschule.digimarkt.model.DataSet;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.MediaRepository;
 import com.hochschule.digimarkt.repository.UsersRepository;
-import com.hochschule.digimarkt.utility.EncryptUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
