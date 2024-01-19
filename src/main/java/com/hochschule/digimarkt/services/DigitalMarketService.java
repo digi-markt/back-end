@@ -57,7 +57,7 @@ public class DigitalMarketService {
         } catch (DataIntegrityViolationException e) {
        throw new IllegalStateException("User with this email already exists.", e);
      } catch (Exception e) {
-        throw new RuntimeException("Error while signing up user", e);
+        throw new IllegalStateException("Error while signing up user", e);
      }
     }
 
@@ -77,7 +77,7 @@ public class DigitalMarketService {
         try {
             return mediaRepository.findAllByFlagTrue();
         } catch (Exception e) {
-           throw new RuntimeException("Unexpected error during findAllByMediaId", e);
+           throw new IllegalStateException("Unexpected error during findAllByMediaId", e);
         }
     }
 
@@ -89,7 +89,7 @@ public class DigitalMarketService {
             throw new IllegalStateException("No media found", e);
         }
         catch (DataAccessException e) {
-          throw new RuntimeException("Error accessing media data", e);
+          throw new IllegalStateException("Error accessing media data", e);
         }
     }
 
@@ -104,9 +104,9 @@ public class DigitalMarketService {
             }
             return false;
         }catch (DataAccessException e) {
-            throw new RuntimeException("Error accessing media data during flag update", e);
+            throw new IllegalStateException("Error accessing media data during flag update", e);
         }catch (Exception e) {
-            throw new RuntimeException("Unexpected error during flag update", e);
+            throw new IllegalStateException("Unexpected error during flag update", e);
         }
     }
 
@@ -131,9 +131,9 @@ public class DigitalMarketService {
                 return "Not saved in the database";
             }
         }catch (DataAccessException e) {
-            throw new RuntimeException("Error accessing media data during post addition", e);
+            throw new IllegalStateException("Error accessing media data during post addition", e);
         } catch (Exception e) {
-            throw new RuntimeException("Unexpected error during post addition", e);
+            throw new IllegalStateException("Unexpected error during post addition", e);
         }
     }
 
