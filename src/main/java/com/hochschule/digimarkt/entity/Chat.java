@@ -1,32 +1,63 @@
 package com.hochschule.digimarkt.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+@Table(name="chats")
 @Entity
-@Table(name = "Chat")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Chat {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ChatID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int chatId;
+    private String firstUserName;
+    private String secondUserName;
 
-    @Column(name = "BuyerID")
-    private int buyerId;
+    @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Message> messageList;
 
-    @Column(name = "SellerID")
-    private int sellerId;
+    public Chat() {
+    }
 
-    @Column(name = "Messages")
-    private String messages;
+    public Chat(int chatId, String firstUserName, String secondUserName, List<Message> messageList) {
+        this.chatId = chatId;
+        this.firstUserName = firstUserName;
+        this.secondUserName = secondUserName;
+        this.messageList = messageList;
+    }
 
-    @Column(name = "StatusID")
-    private int statusId;
+    public int getChatId() {
+        return chatId;
+    }
 
+    public void setChatId(int chatId) {
+        this.chatId = chatId;
+    }
+
+    public String getFirstUserName() {
+        return firstUserName;
+    }
+
+    public void setFirstUserName(String firstUserName) {
+        this.firstUserName = firstUserName;
+    }
+
+    public String getSecondUserName() {
+        return secondUserName;
+    }
+
+    public void setSecondUserName(String secondUserName) {
+        this.secondUserName = secondUserName;
+    }
+
+    public List<Message> getMessageList() {
+        return messageList;
+    }
+
+    public void setMessageList(List<Message> messageList) {
+        this.messageList = messageList;
+    }
 }
