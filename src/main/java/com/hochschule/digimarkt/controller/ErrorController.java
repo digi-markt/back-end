@@ -4,6 +4,8 @@ import com.hochschule.digimarkt.exceptions.NotAuthorizedException;
 import com.hochschule.digimarkt.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -65,6 +67,18 @@ public class ErrorController {
     @ExceptionHandler(IllegalStateException.class)
     public String handleIllegalRequest(IllegalStateException e) {
         logger.warn("Bad request: {}", e.getMessage());
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public String handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        logger.warn("User with this email already exists", e.getMessage());
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    public String handleDataAccess(DataAccessException e) {
+        logger.warn("Error accessing media data", e.getMessage());
         return e.getMessage();
     }
 

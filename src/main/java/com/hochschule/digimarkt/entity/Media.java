@@ -35,16 +35,6 @@ public class Media {
     @Column(name = "seller_email")
     private String seller_email;
 
-
-    //@Column(name = "ApprovalAdminID")
-    //private int approvalAdminId;
-
-    /*@Column(name = "ApprovalAdminName")
-    private String approvalAdminName;*/
-
-    /*@Column(name = "MediaCategoryID")
-    private int mediaCategoryId;*/
-
     @Column(name = "Created_on")
     private Date createdOn;
 
@@ -112,30 +102,6 @@ public class Media {
     public void setSellerId(int sellerId) {
         this.sellerId = sellerId;
     }
-
-    /*public int getApprovalAdminId() {
-        return approvalAdminId;
-    }
-
-    public void setApprovalAdminId(int approvalAdminId) {
-        this.approvalAdminId = approvalAdminId;
-    }*/
-
-   /* public String getApprovalAdminName() {
-        return approvalAdminName;
-    }
-
-    public void setApprovalAdminName(String approvalAdminName) {
-        this.approvalAdminName = approvalAdminName;
-    }*/
-
-    /*public int getMediaCategoryId() {
-        return mediaCategoryId;
-    }
-
-    public void setMediaCategoryId(int mediaCategoryId) {
-        this.mediaCategoryId = mediaCategoryId;
-    }*/
 
     public Date getCreatedOn() {
         return createdOn;
