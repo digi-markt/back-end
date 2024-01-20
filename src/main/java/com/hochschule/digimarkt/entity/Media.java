@@ -47,6 +47,9 @@ public class Media {
     @Column(name = "Free")
     private boolean isFree;
 
+    @Column(name = "report_flag")
+    private boolean reportFlag;
+
     public int getMediaId() {
         return mediaId;
     }
@@ -149,5 +152,13 @@ public class Media {
 
     public void setSeller_email(String seller_email) {
         this.seller_email = seller_email;
+    }
+
+    public boolean isReportFlag() {
+        return reportFlag;
+    }
+
+    public void setReportFlag(boolean reportFlag) {
+        this.reportFlag = reportFlag;
     }
 }

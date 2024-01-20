@@ -8,6 +8,7 @@ import com.hochschule.digimarkt.model.DataSet;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.MediaRepository;
 import com.hochschule.digimarkt.repository.UsersRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -187,5 +188,65 @@ public class DigitalMarketService {
         }catch (NotFoundException e) {
             throw new IllegalStateException("Media not found");
         }
+    }
+
+    @Transactional
+    public boolean setReportFlagTrue(int mediaId, boolean flag) {
+        Media media = mediaRepository.findById(mediaId).orElse(null);
+
+        if (media != null) {
+            media.setReportFlag(flag);
+            mediaRepository.save(media);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Transactional
+    public boolean updateMedia(int mediaId,String name, String description, String image, Double price) {
+        Media media = mediaRepository.findById(mediaId).orElse(null);
+
+        if (media != null) {
+            if (name != null) {
+                media.setName(name);
+            }
+            if (description != null) {
+                media.setDescription(description);
+            }
+            if (image != null) {
+                media.setImage(image);
+            }
+            if (price != null) {
+                media.setPrice(price);
+            }
+            mediaRepository.save(media);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Transactional
+    public boolean updateUserProfile(int userId, String username, String email) {
+        Users user = usersRepository.findById((long) userId).orElse(null);
+
+        if (user != null) {
+            if (username != null) {
+                user.setUsername(username);
+                user.setUser_name(username);
+            }
+            if (email != null) {
+                user.setEmail(email);
+            }
+            usersRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Long countBySellerId(int sellerId) {
+        return mediaRepository.countBySellerId(sellerId);
     }
 }

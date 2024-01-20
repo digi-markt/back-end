@@ -5,18 +5,18 @@ package com.hochschule.digimarkt.controller;
 
 import com.hochschule.digimarkt.entity.Media;
 import com.hochschule.digimarkt.entity.Users;
-import com.hochschule.digimarkt.exceptions.InternalException;
-import com.hochschule.digimarkt.exceptions.NotAuthorizedException;
-import com.hochschule.digimarkt.exceptions.NotFoundException;
 import com.hochschule.digimarkt.model.AddRequest;
 import com.hochschule.digimarkt.model.DataSet;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.UsersRepository;
 import com.hochschule.digimarkt.services.DigitalMarketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import com.hochschule.digimarkt.exceptions.InternalException;
+import com.hochschule.digimarkt.exceptions.NotAuthorizedException;
 import org.springframework.http.ResponseEntity;
+import com.hochschule.digimarkt.exceptions.NotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class DigitalMarketController {
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PostMapping("/api/login")
 	public ResponseEntity<Users> login(@RequestBody LoginRequest loginRequest) {
-		try{
+		try {
 			String originalPassword = loginRequest.getPassword();
 			String encodedPassword = encodePassword(originalPassword);
 
@@ -58,93 +58,93 @@ public class DigitalMarketController {
 
 			return ResponseEntity.ok(response);
 
-		} catch (NotAuthorizedException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-		} catch (InternalException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
+		}  catch (NotAuthorizedException e) {
+			 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+		}  catch (InternalException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}  catch (Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		 }
 	}
 
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PostMapping("/api/signup")
 	public ResponseEntity<Users> signup(@RequestBody Users users) {
-		try{
+		try {
 			if (usersRepository.existsByEmail(users.getEmail())) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 			Users user = digitalMarketService.signUp(users);
 			return new ResponseEntity<>(user, HttpStatus.CREATED);
-		} catch (NotAuthorizedException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-		} catch (InternalException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
+		}catch (NotAuthorizedException e) {
+			 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+		}catch (InternalException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}catch (Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		 }
 	}
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@GetMapping("/displayAllNonApprovedProducts")
 	public ResponseEntity<List<Media>> findAllNonApprovedProducts() {
-		try {
+		try{
 			List<Media> approvedProducts = digitalMarketService.findAllNonApprovedProducts();
 			if (approvedProducts.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			} else {
 				return new ResponseEntity<>(approvedProducts, HttpStatus.OK);
 			}
-		} catch (InternalException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
+		}catch (InternalException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}catch (Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		 }
 	}
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@GetMapping("/displayProduct/{mediaId}")
 	public ResponseEntity<List<Media>> findById(@PathVariable int mediaId) {
-		try {
+		try{
 			List<Media> entities = digitalMarketService.findAllByMediaId(mediaId);
 			if (entities.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			} else {
 				return new ResponseEntity<>(entities, HttpStatus.OK);
 			}
-		} catch (InternalException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		} catch (NotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
+		}catch (InternalException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}catch (NotFoundException e) {
+			 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}catch (Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		 }
 	}
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@GetMapping("/displayProducts")
 	public ResponseEntity<List<Media>> findAll() {
-		try{
+		try {
 			List<Media> entities = digitalMarketService.findAllByMediaId();
 			if (entities.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			} else {
 				return new ResponseEntity<>(entities, HttpStatus.OK);
 			}
-		} catch (NullPointerException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}  catch (NotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
+		}catch (NullPointerException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		} catch (NotFoundException e) {
+			 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}catch (Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		 }
 	}
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PutMapping("/update-flag/{mediaId}")
 	public ResponseEntity<String> updateFlag(@PathVariable int mediaId) {
-		try {
+		try{
 			boolean updated = digitalMarketService.updateFlag(mediaId);
 
 			if (updated) {
@@ -152,30 +152,30 @@ public class DigitalMarketController {
 			} else {
 				return new ResponseEntity<>("Media not found or already flagged", HttpStatus.NOT_FOUND);
 			}
-		}catch (NullPointerException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}catch (NotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
+		} catch (NullPointerException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		} catch (NotFoundException e) {
+			 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		} catch (Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		 }
 	}
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PostMapping("/addpost")
 	public ResponseEntity<String> addPost(@RequestBody AddRequest addRequest){
-		try{
+		try {
 			String status = digitalMarketService.addPost(addRequest);
 			return new ResponseEntity<>(status, HttpStatus.OK);
-		}catch (DataIntegrityViolationException e) {
-			return new ResponseEntity<>("Error: Duplicate entry or data integrity violation"+ e.getMessage(), HttpStatus.BAD_REQUEST);
-		} catch (InternalException e) {
-			return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-		} catch (NotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		} catch (Exception e) {
-			return new ResponseEntity<>("Error: Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		} catch (DataIntegrityViolationException e) {
+			 return new ResponseEntity<>("Error: Duplicate entry or data integrity violation"+ e.getMessage(), HttpStatus.BAD_REQUEST);
+		}catch (InternalException e) {
+			 return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+		}catch (NotFoundException e) {
+			 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}catch (Exception e) {
+			 return new ResponseEntity<>("Error: Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+		 }
 	}
 
 
@@ -183,7 +183,7 @@ public class DigitalMarketController {
 
 	@GetMapping("/totalDataSet")
 	public ResponseEntity<DataSet> dataSet() {
-		try {
+		try{
 			DataSet dataSet = digitalMarketService.findTotalDataSet();
 
 			if (dataSet != null) {
@@ -191,20 +191,20 @@ public class DigitalMarketController {
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
-		}catch (NullPointerException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}catch (NotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
+		} catch (NullPointerException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		} catch (NotFoundException e) {
+			 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		} catch (Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		 }
 	}
 
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@GetMapping("/getmyadds/{userId}")
 	public ResponseEntity<List<Media>> getMyAdds(@PathVariable int userId) {
-		try{
+		try {
 			List<Media> mediaList = digitalMarketService.findMyAdds(userId);
 
 			if (mediaList.isEmpty()) {
@@ -212,13 +212,13 @@ public class DigitalMarketController {
 			} else {
 				return new ResponseEntity<>(mediaList, HttpStatus.OK);
 			}
-		}catch (NullPointerException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		} catch (NotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
+		} catch (NullPointerException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}catch (NotFoundException e) {
+			 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}catch (Exception e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		 }
 	}
 
 	@DeleteMapping("/deleteMedia/{mediaId}")
@@ -230,13 +230,61 @@ public class DigitalMarketController {
 			} else {
 				return new ResponseEntity<>("Post not found", HttpStatus.NOT_FOUND);
 			}
-		} catch (NullPointerException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		} catch (NotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		} catch (Exception e) {
+		}catch (NullPointerException e) {
+			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}catch (NotFoundException e) {
+			 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}catch (Exception e) {
 			return new ResponseEntity<>("Error deleting media: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@PutMapping("/setReportFlagTrue/{mediaId}/{flag}")
+	public ResponseEntity<String> setReportFlagTrue(@PathVariable int mediaId, @PathVariable boolean flag) {
+		boolean updated = digitalMarketService.setReportFlagTrue(mediaId,flag);
+
+		if (updated) {
+			return new ResponseEntity<>("Report flag set to true for media ID: " + mediaId, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Media ID not found: " + mediaId, HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PutMapping("/updateMediaDetails/{mediaId}")
+	public ResponseEntity<String> updateMedia(
+			@PathVariable int mediaId,
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false) String description,
+			@RequestParam(required = false) String image,
+			@RequestParam(required = false) Double price
+	) {
+		boolean updated = digitalMarketService.updateMedia(mediaId,name, description, image, price);
+
+		if (updated) {
+			return new ResponseEntity<>("Media updated successfully for ID: " + mediaId, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Media ID not found: " + mediaId, HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PutMapping("/updateUserProfile/{userId}")
+	public ResponseEntity<String> updateUser(
+			@PathVariable int userId,
+			@RequestParam(required = false) String username,
+			@RequestParam(required = false) String email
+	) {
+		boolean updated = digitalMarketService.updateUserProfile(userId, username, email);
+
+		if (updated) {
+			return new ResponseEntity<>("User updated successfully for ID: " + userId, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("User ID not found: " + userId, HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/mediaCountForSeller/{sellerId}")
+	public Long getMediaCountForSeller(@PathVariable int sellerId) {
+		return digitalMarketService.countBySellerId(sellerId);
 	}
 }
 

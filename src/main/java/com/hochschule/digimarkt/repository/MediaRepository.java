@@ -10,10 +10,10 @@ public interface MediaRepository extends JpaRepository<Media, Integer> {
 
     List<Media> findAllByMediaId(int mediaId);
 
-    @Query("SELECT m FROM Media m WHERE m.flag = false")
+    @Query("SELECT m FROM Media m WHERE m.flag = false or reportFlag = true")
     List<Media> findAllNonApprovedProducts();
 
-    @Query("Select m FROM Media m WHERE m.flag = true")
+    @Query("Select m FROM Media m WHERE m.flag = true and reportFlag = false")
     List<Media> findAllByFlagTrue();
 
     @Query("Select COUNT(m) FROM Media m WHERE m.flag = false")
@@ -24,4 +24,6 @@ public interface MediaRepository extends JpaRepository<Media, Integer> {
 
     @Query("Select m FROM Media m WHERE m.sellerId =:sellerId")
     List<Media> findAddsBySellerId(int sellerId);
+
+    Long countBySellerId(int sellerId);
 }
