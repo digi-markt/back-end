@@ -70,7 +70,7 @@ public class DigitalMarketService {
         try {
             return mediaRepository.findAllByMediaId(mediaId);
         }catch (NotFoundException e) {
-            throw new RuntimeException("Media not found", e);
+            throw new IllegalStateException("Media not found", e);
         }
     }
 
@@ -156,9 +156,9 @@ public class DigitalMarketService {
 
             return dataSet;
         } catch (DataAccessException e) {
-            throw new RuntimeException("Error accessing data during total data retrieval", e);
+            throw new IllegalStateException("Error accessing data during total data retrieval", e);
         } catch (Exception e) {
-            throw new RuntimeException("Unexpected error during total data  retrieval", e);
+            throw new IllegalStateException("Unexpected error during total data  retrieval", e);
         }
     }
 
@@ -171,9 +171,9 @@ public class DigitalMarketService {
             }
             return media;
         } catch (DataAccessException e) {
-            throw new RuntimeException("Error accessing media data during findMyAdds", e);
+            throw new IllegalStateException("Error accessing media data during findMyAdds", e);
         } catch (Exception e) {
-            throw new RuntimeException("Unexpected error during findMyAdds", e);
+            throw new IllegalStateException("Unexpected error during findMyAdds", e);
         }
     }
 
