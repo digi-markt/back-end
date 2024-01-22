@@ -222,6 +222,7 @@ public class DigitalMarketController {
 		 }
 	}
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@DeleteMapping("/deleteMedia/{mediaId}")
 	public ResponseEntity<String> deleteMedia(@PathVariable int mediaId) {
 		try {
@@ -240,6 +241,7 @@ public class DigitalMarketController {
 		}
 	}
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PutMapping("/setReportFlagTrue/{mediaId}/{flag}")
 	public ResponseEntity<String> setReportFlagTrue(@PathVariable int mediaId, @PathVariable boolean flag) {
 		boolean updated = digitalMarketService.setReportFlagTrue(mediaId,flag);
@@ -251,6 +253,7 @@ public class DigitalMarketController {
 		}
 	}
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PutMapping("/updateMediaDetails/{mediaId}")
 	public ResponseEntity<String> updateMedia(
 			@PathVariable int mediaId,
@@ -268,6 +271,7 @@ public class DigitalMarketController {
 		}
 	}
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@PutMapping("/updateUserProfile/{userId}")
 	public ResponseEntity<String> updateUser(
 			@PathVariable int userId,
@@ -283,6 +287,7 @@ public class DigitalMarketController {
 		}
 	}
 
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
 	@GetMapping("/mediaCountForSeller/{sellerId}")
 	public Long getMediaCountForSeller(@PathVariable int sellerId) {
 		return digitalMarketService.countBySellerId(sellerId);
