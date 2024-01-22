@@ -54,6 +54,7 @@ public class DigitalMarketController {
 			//String encodedPassword = encodePassword(originalPassword);
 
 			//loginRequest.setPassword(encodedPassword);
+
 			Users response = digitalMarketService.login(loginRequest);
 
 			return ResponseEntity.ok(response);

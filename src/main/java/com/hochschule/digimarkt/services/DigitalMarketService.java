@@ -46,6 +46,7 @@ public class DigitalMarketService {
 
     public Users signUp(Users user) {
         try {
+
            // String originalPassword = user.getPassword();
            // String encodedPassword = encodePassword(originalPassword);
 
