@@ -50,10 +50,10 @@ public class DigitalMarketController {
 	@PostMapping("/api/login")
 	public ResponseEntity<Users> login(@RequestBody LoginRequest loginRequest) {
 		try {
-			String originalPassword = loginRequest.getPassword();
-			String encodedPassword = encodePassword(originalPassword);
+			//String originalPassword = loginRequest.getPassword();
+			//String encodedPassword = encodePassword(originalPassword);
 
-			loginRequest.setPassword(encodedPassword);
+			//loginRequest.setPassword(encodedPassword);
 			Users response = digitalMarketService.login(loginRequest);
 
 			return ResponseEntity.ok(response);

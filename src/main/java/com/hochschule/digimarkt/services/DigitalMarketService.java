@@ -33,7 +33,7 @@ public class DigitalMarketService {
     public Users login(LoginRequest loginRequest) {
         try {
             Users users = usersRepository.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
-
+            System.out.println(users);
             if (null != users) {
                 return users;
             } else {
@@ -46,10 +46,10 @@ public class DigitalMarketService {
 
     public Users signUp(Users user) {
         try {
-            String originalPassword = user.getPassword();
-            String encodedPassword = encodePassword(originalPassword);
+           // String originalPassword = user.getPassword();
+           // String encodedPassword = encodePassword(originalPassword);
 
-            user.setPassword(encodedPassword);
+            user.setPassword(user.getPassword());
             user.setRoleId(1);
             user.setUser_name(user.getUsername());
             user.setRating(0);
