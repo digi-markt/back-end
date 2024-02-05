@@ -3,7 +3,6 @@ package com.hochschule.digimarkt.controller;
 
 import com.hochschule.digimarkt.entity.Chat;
 import com.hochschule.digimarkt.entity.Message;
-import com.hochschule.digimarkt.exceptions.ChatAlreadyExistException;
 import com.hochschule.digimarkt.exceptions.ChatNotFoundException;
 import com.hochschule.digimarkt.exceptions.NoChatExistsInTheRepository;
 import com.hochschule.digimarkt.services.ChatServiceImpl;
@@ -12,9 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static com.hochschule.digimarkt.utility.StringUtils.CHAT_NOT_FOUND_MESSAGE;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -25,13 +26,12 @@ public class ChatController {
     private ChatServiceImpl chatService;
 
     @PostMapping("/add")
-    public ResponseEntity<Chat> createChat(@RequestBody Chat chat) throws IOException {
-
+    public ResponseEntity<Chat> createChat(@RequestBody Chat chat){
         return new ResponseEntity<Chat>(chatService.addChat(chat), HttpStatus.CREATED);
     }
 
     @PostMapping("/add/message1")
-    public ResponseEntity<Message> addMessage2(@RequestBody Message message) throws IOException {
+    public ResponseEntity<Message> addMessage2(@RequestBody Message message){
             return new ResponseEntity<Message>(chatService.addMessage2(message), HttpStatus.CREATED);
     }
 
@@ -45,7 +45,8 @@ public class ChatController {
     }
 
     @GetMapping("/all/messages/from/chat/{chatId}")
-    public ResponseEntity<?> getAllMessagesInChat(@PathVariable int chatId) {
+
+    public ResponseEntity<List<Message>> getAllMessagesInChat(@PathVariable int chatId) {
         try {
             Chat chat = new Chat();
             chat.setChatId(chatId);
@@ -59,19 +60,20 @@ public class ChatController {
     @GetMapping("/{id}")
     public ResponseEntity<Chat> getChatById(@PathVariable int id) {
         try {
+
             return new ResponseEntity<Chat>(chatService.getById(id), HttpStatus.OK);
         } catch (ChatNotFoundException e) {
-           return new ResponseEntity("Chat Not Found", HttpStatus.NOT_FOUND);
+           return new ResponseEntity(CHAT_NOT_FOUND_MESSAGE, HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/firstUserName/{username}")
-    public ResponseEntity<?> getChatByFirstUserName(@PathVariable String username) {
+    public ResponseEntity<Set<Chat>> getChatByFirstUserName(@PathVariable String username) {
         try {
             HashSet<Chat> byChat = this.chatService.getChatByFirstUserName(username);
             return new ResponseEntity<>(byChat, HttpStatus.OK);
         } catch (ChatNotFoundException e) {
-            return new ResponseEntity("Chat Not Exits", HttpStatus.CONFLICT);
+            return new ResponseEntity(CHAT_NOT_FOUND_MESSAGE, HttpStatus.CONFLICT);
         }
     }
 
@@ -84,7 +86,7 @@ public class ChatController {
             HashSet<Chat> byChat = this.chatService.getChatBySecondUserName(username);
             return new ResponseEntity<>(byChat, HttpStatus.OK);
         } catch (ChatNotFoundException e) {
-            return new ResponseEntity("Chat Not Exits", HttpStatus.CONFLICT);
+            return new ResponseEntity(CHAT_NOT_FOUND_MESSAGE, HttpStatus.CONFLICT);
         }
     }
 
@@ -95,7 +97,7 @@ public class ChatController {
             HashSet<Chat> byChat = this.chatService.getChatByFirstUserNameOrSecondUserName(username);
             return new ResponseEntity<>(byChat, HttpStatus.OK);
         } catch (ChatNotFoundException e) {
-            return new ResponseEntity("Chat Not Exits", HttpStatus.CONFLICT);
+            return new ResponseEntity(CHAT_NOT_FOUND_MESSAGE, HttpStatus.CONFLICT);
         }
     }
 
@@ -107,7 +109,7 @@ public class ChatController {
             HashSet<Chat> chatByBothEmail = this.chatService.getChatByFirstUserNameAndSecondUserName(firstUserName, secondUserName);
             return new ResponseEntity<>(chatByBothEmail, HttpStatus.OK);
         } catch (ChatNotFoundException e) {
-            return new ResponseEntity("Chat Not Exits", HttpStatus.NOT_FOUND);
+            return new ResponseEntity(CHAT_NOT_FOUND_MESSAGE, HttpStatus.NOT_FOUND);
         }
     }
 

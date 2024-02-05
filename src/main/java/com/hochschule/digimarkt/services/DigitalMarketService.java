@@ -9,6 +9,8 @@ import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.MediaRepository;
 import com.hochschule.digimarkt.repository.UsersRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,8 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import static com.hochschule.digimarkt.utility.EncryptUtility.encodePassword;
+// Reviewer Ashish
 
 @Service
 public class DigitalMarketService {
@@ -29,11 +30,12 @@ public class DigitalMarketService {
     @Autowired
     private MediaRepository mediaRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(DigitalMarketService.class);
 
     public Users login(LoginRequest loginRequest) {
         try {
             Users users = usersRepository.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
-            System.out.println(users);
+            logger.info("Users: {}", users);
             if (null != users) {
                 return users;
             } else {
@@ -45,22 +47,19 @@ public class DigitalMarketService {
     }
 
     public Users signUp(Users user) {
-        try {
 
-           // String originalPassword = user.getPassword();
-           // String encodedPassword = encodePassword(originalPassword);
-
+        try{
             user.setPassword(user.getPassword());
             user.setRoleId(1);
             user.setUser_name(user.getUsername());
             user.setRating(0);
-            Users savedUser = usersRepository.save(user);
-            return savedUser;
-        } catch (DataIntegrityViolationException e) {
-       throw new IllegalStateException("User with this email already exists.", e);
-     } catch (Exception e) {
+            return usersRepository.save(user);
+
+        }catch (DataIntegrityViolationException e) {
+          throw new IllegalStateException("User with this email already exists.", e);
+     }catch (Exception e) {
         throw new IllegalStateException("Error while signing up user", e);
-     }
+      }
     }
 
     public List<Media> findAll() {
@@ -85,8 +84,7 @@ public class DigitalMarketService {
 
     public List<Media> findAllNonApprovedProducts() {
         try {
-            List<Media> approvedProducts = mediaRepository.findAllNonApprovedProducts();
-            return approvedProducts;
+            return mediaRepository.findAllNonApprovedProducts();
         }catch (NotFoundException e) {
             throw new IllegalStateException("No media found", e);
         }
@@ -121,8 +119,10 @@ public class DigitalMarketService {
             media.setPrice(addRequest.getPrice());
             media.setSellerId(addRequest.getUserId());
             Users user = usersRepository.findById((long) addRequest.getUserId()).orElse(null);
-            media.setSeller_name(user.getUsername());
-            media.setSeller_email(user.getEmail());
+            if (user != null) {
+                media.setSeller_name(user.getUsername());
+                media.setSeller_email(user.getEmail());
+            }
             media.setFree(addRequest.isFree());
             media.setImage(addRequest.getImageUrl());
             media.setCreatedOn(new Date());
@@ -204,7 +204,7 @@ public class DigitalMarketService {
         }
     }
 
-    @Transactional
+   /* @Transactional
     public boolean updateMedia(int mediaId,String name, String description, String image, Double price) {
         Media media = mediaRepository.findById(mediaId).orElse(null);
 
@@ -226,27 +226,47 @@ public class DigitalMarketService {
         } else {
             return false;
         }
-    }
+    }*/
 
     @Transactional
-    public boolean updateUserProfile(int userId, String username, String email) {
-        Users user = usersRepository.findById((long) userId).orElse(null);
+    public boolean updateMedia(int mediaId, String name, String description, String image, Double price) {
+        Optional<Media> optionalMedia = mediaRepository.findById(mediaId);
 
-        if (user != null) {
-            if (username != null) {
-                user.setUsername(username);
-                user.setUser_name(username);
-            }
-            if (email != null) {
-                user.setEmail(email);
-            }
-            usersRepository.save(user);
+        if (optionalMedia.isPresent()) {
+            Media media = optionalMedia.get();
+
+            media.setName(name != null?name : media.getName());
+            media.setDescription(description != null?description : media.getDescription());
+            media.setImage(image != null?image : media.getImage());
+            media.setPrice(price != null?price : media.getPrice());
+
             return true;
         } else {
             return false;
         }
     }
 
+    @Transactional
+    public boolean updateUserProfile(int userId, String username, String email) {
+        Optional<Users> optionalUser = usersRepository.findById((long) userId);
+
+        if (optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+
+            user.setUsername(username != null ? username : user.getUsername());
+            user.setUser_name(username != null ? username : user.getUser_name());
+            List<Media> mediaList = mediaRepository.findAddsBySellerId(userId);
+            if (!mediaList.isEmpty()) {
+                for (Media media : mediaList) {
+                    media.setSeller_name(username);
+                }
+            }
+            user.setEmail(email != null ? email : user.getEmail());
+
+            return true;
+        }
+        return false;
+    }
     public Long countBySellerId(int sellerId) {
         return mediaRepository.countBySellerId(sellerId);
     }

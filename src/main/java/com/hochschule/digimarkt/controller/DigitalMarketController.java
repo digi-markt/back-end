@@ -5,23 +5,24 @@ package com.hochschule.digimarkt.controller;
 
 import com.hochschule.digimarkt.entity.Media;
 import com.hochschule.digimarkt.entity.Users;
+import com.hochschule.digimarkt.exceptions.InternalException;
+import com.hochschule.digimarkt.exceptions.NotAuthorizedException;
+import com.hochschule.digimarkt.exceptions.NotFoundException;
 import com.hochschule.digimarkt.model.AddRequest;
 import com.hochschule.digimarkt.model.DataSet;
 import com.hochschule.digimarkt.model.LoginRequest;
 import com.hochschule.digimarkt.repository.UsersRepository;
 import com.hochschule.digimarkt.services.DigitalMarketService;
+import com.hochschule.digimarkt.utility.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import com.hochschule.digimarkt.exceptions.InternalException;
-import com.hochschule.digimarkt.exceptions.NotAuthorizedException;
-import org.springframework.http.ResponseEntity;
-import com.hochschule.digimarkt.exceptions.NotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.hochschule.digimarkt.utility.EncryptUtility.encodePassword;
+import static com.hochschule.digimarkt.utility.StringUtils.MEDIA_NOT_FOUND;
 
 /**
  * 
@@ -168,7 +169,7 @@ public class DigitalMarketController {
 		try {
 			String status = digitalMarketService.addPost(addRequest);
 			return new ResponseEntity<>(status, HttpStatus.OK);
-		} catch (DataIntegrityViolationException e) {
+		}catch (DataIntegrityViolationException e) {
 			 return new ResponseEntity<>("Error: Duplicate entry or data integrity violation"+ e.getMessage(), HttpStatus.BAD_REQUEST);
 		}catch (InternalException e) {
 			 return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -219,7 +220,7 @@ public class DigitalMarketController {
 			 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}catch (Exception e) {
 			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		 }
+		}
 	}
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
@@ -249,7 +250,7 @@ public class DigitalMarketController {
 		if (updated) {
 			return new ResponseEntity<>("Report flag set to true for media ID: " + mediaId, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Media ID not found: " + mediaId, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(MEDIA_NOT_FOUND + mediaId, HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -267,7 +268,7 @@ public class DigitalMarketController {
 		if (updated) {
 			return new ResponseEntity<>("Media updated successfully for ID: " + mediaId, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Media ID not found: " + mediaId, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(MEDIA_NOT_FOUND + mediaId, HttpStatus.NOT_FOUND);
 		}
 	}
 

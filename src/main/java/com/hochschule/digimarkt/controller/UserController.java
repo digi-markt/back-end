@@ -21,8 +21,10 @@ public class UserController {
     private UserServiceImpl userService;
 
     @GetMapping("/getall")
+    //Remove the declaration of thrown exception
     public ResponseEntity<List<User>> getall() throws IOException {
         try{
+            //Replace the type specification in this constructor call with the diamond operator
             return new ResponseEntity<List<User>>(userService.getall(), HttpStatus.OK);
         }catch (UserNotFoundException e){
             return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
@@ -30,6 +32,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
+    //Remove the declaration of thrown exception
     public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
         try{
             return new ResponseEntity<User>(userService.addUser(user), HttpStatus.OK);
