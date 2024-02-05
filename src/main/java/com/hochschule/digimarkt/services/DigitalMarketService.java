@@ -291,6 +291,7 @@ public class DigitalMarketService {
 
             if (media != null) {
                 media.setFlag(false);
+                media.setReportFlag(false);
                 mediaRepository.save(media);
                 return true;
             }
