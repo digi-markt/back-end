@@ -293,6 +293,23 @@ public class DigitalMarketController {
 	public Long getMediaCountForSeller(@PathVariable int sellerId) {
 		return digitalMarketService.countBySellerId(sellerId);
 	}
+
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
+	@GetMapping("/displayAllReportedProducts")
+	public ResponseEntity<List<Media>> findAllReportedProducts() {
+		try{
+			List<Media> reportedProducts = digitalMarketService.findAllReportedProducts();
+			if (reportedProducts.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			} else {
+				return new ResponseEntity<>(reportedProducts, HttpStatus.OK);
+			}
+		}catch (InternalException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 }
 
 	

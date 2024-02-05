@@ -145,8 +145,10 @@ public class DigitalMarketService {
 
             int approvedAdd = 0;
             int pendingAdd = 0;
+            int reportedAdds =0;
             approvedAdd = mediaRepository.findNumberApprovedAdds();
             pendingAdd = mediaRepository.findNumberofNotApprovedAdds();
+            reportedAdds = mediaRepository.findNumberofReportedAdds();
             int totalUser = usersRepository.findAll().size();
             int totalAdd = mediaRepository.findAll().size();
 
@@ -154,6 +156,7 @@ public class DigitalMarketService {
             dataSet.setApprovedAdd(approvedAdd);
             dataSet.setPendingAdd(pendingAdd);
             dataSet.setTotalAdd(totalAdd);
+            dataSet.setReportedAdd(reportedAdds);
 
             return dataSet;
         } catch (DataAccessException e) {
@@ -269,5 +272,16 @@ public class DigitalMarketService {
     }
     public Long countBySellerId(int sellerId) {
         return mediaRepository.countBySellerId(sellerId);
+    }
+
+    public List<Media> findAllReportedProducts() {
+        try {
+            return mediaRepository.findAllReportedProducts();
+        }catch (NotFoundException e) {
+            throw new IllegalStateException("No media found", e);
+        }
+        catch (DataAccessException e) {
+            throw new IllegalStateException("Error accessing media data", e);
+        }
     }
 }
