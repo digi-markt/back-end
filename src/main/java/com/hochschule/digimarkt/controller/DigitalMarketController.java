@@ -310,6 +310,27 @@ public class DigitalMarketController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
+
+	@CrossOrigin(origins = {"http://localhost:4200", "http://13.51.149.52", "http://digimarkt.online", "https://digimarkt.online", "http://digimarkt.shop", "https://digimarkt.shop"})
+	@PutMapping("/changeApprove/{mediaId}")
+	public ResponseEntity<String> changeApproves(@PathVariable int mediaId) {
+		try{
+			boolean updated = digitalMarketService.updateApproveFlag(mediaId);
+
+			if (updated) {
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>("Media not found or already flagged", HttpStatus.NOT_FOUND);
+			}
+		} catch (NullPointerException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		} catch (NotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+
 }
 
 	

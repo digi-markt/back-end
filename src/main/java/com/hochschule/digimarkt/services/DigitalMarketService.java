@@ -284,4 +284,21 @@ public class DigitalMarketService {
             throw new IllegalStateException("Error accessing media data", e);
         }
     }
+
+    public boolean updateApproveFlag(int mediaId) {
+        try {
+            Media media = mediaRepository.findById(mediaId).orElse(null);
+
+            if (media != null) {
+                media.setFlag(false);
+                mediaRepository.save(media);
+                return true;
+            }
+            return false;
+        }catch (DataAccessException e) {
+            throw new IllegalStateException("Error accessing media data during flag update", e);
+        }catch (Exception e) {
+            throw new IllegalStateException("Unexpected error during flag update", e);
+        }
+    }
 }
