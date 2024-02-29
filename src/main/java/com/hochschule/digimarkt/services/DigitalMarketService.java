@@ -242,6 +242,7 @@ public class DigitalMarketService {
             media.setDescription(description != null?description : media.getDescription());
             media.setImage(image != null?image : media.getImage());
             media.setPrice(price != null?price : media.getPrice());
+            media.setFlag(false);
 
             return true;
         } else {
